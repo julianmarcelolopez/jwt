@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "b6e13cf7-5974-4963-a2f4-4c6c0ad2b61e",
+		"name": "JWT Authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26916748",
+		"_collection_link": "https://solar-firefly-356596.postman.co/workspace/Team-Workspace~b9f5115d-5418-4c40-8163-3961829d23c1/collection/26916748-b6e13cf7-5974-4963-a2f4-4c6c0ad2b61e?action=share&source=collection_link&creator=26916748"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"usuario@ejemplo.com\",\n    \"password\": \"contraseña123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Secured Endpoint Example",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/secured/ejemplo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"secured",
+						"ejemplo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registro Usuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"usuario@ejemplo.com\",\n    \"password\": \"contraseña123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/registro",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"registro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt_token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c3VhcmlvQGVqZW1wbG8uY29tIiwiaWF0IjoxNzM5MjIzNTMwLCJleHAiOjE3MzkyNTk1MzB9.VhosuFQvqj-eBOyUrQJJxkr0eXjx_yqE-JUaHlZ-pok"
+		}
+	]
+}
