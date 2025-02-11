@@ -48,13 +48,40 @@ public class AuthenticationController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@PostMapping("/registro")
-	public ResponseEntity<String> registrarUsuario(@RequestBody Usuario usuario) {
-		// Encriptar contraseña antes de guardar
-		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+//	@PostMapping("/registro")
+//	public ResponseEntity<String> registrarUsuario(@RequestBody Usuario usuario) {
+//		// Encriptar contraseña antes de guardar
+//		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+//
+//		Usuario usuarioGuardado = usuarioService.registrar(usuario);
+//		return ResponseEntity.ok("Usuario registrado con ID: " + usuarioGuardado.getId());
+//	}
 
-		Usuario usuarioGuardado = usuarioService.registrar(usuario);
-		return ResponseEntity.ok("Usuario registrado con ID: " + usuarioGuardado.getId());
+	@PostMapping("/registro")
+	public ResponseEntity<?> registrarUsuario(@RequestBody RegistroRequest registroRequest) {
+		// Verificar si el usuario ya existe
+		if (usuarioService.existsByEmail(registroRequest.getEmail())) {
+			return ResponseEntity
+					.badRequest()
+					.body("Error: El email ya está en uso");
+		}
+
+		// Crear nuevo usuario
+		Usuario usuario = new Usuario();
+		usuario.setEmail(registroRequest.getEmail());
+		usuario.setPassword(passwordEncoder.encode(registroRequest.getPassword()));
+
+		// Asignar roles
+		if (registroRequest.getRoles() == null || registroRequest.getRoles().isEmpty()) {
+			// Si no se especifican roles, asignar ROLE_USER por defecto
+			usuario.addRole("ROLE_USER");
+		} else {
+			registroRequest.getRoles().forEach(usuario::addRole);
+		}
+
+		usuarioService.registrar(usuario);
+
+		return ResponseEntity.ok("Usuario registrado exitosamente!");
 	}
 
 	@GetMapping("/usuarios")

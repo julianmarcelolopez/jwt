@@ -28,6 +28,10 @@ public class UsuarioService implements UserDetailsService {
 		return usuarioRepository.save(usuario);
 	}
 
+	public boolean existsByEmail(String email) {
+		return usuarioRepository.findByEmail(email).isPresent();
+	}
+
 	public List<Usuario> getAll() {
 		return usuarioRepository.findAll();
 	}
